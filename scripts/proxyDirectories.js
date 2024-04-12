@@ -35,7 +35,7 @@ function findResources(options) {
 }
 
 function proxyResource(options) {
-  const { pkgName = 'rsuite', name, file, filePath = '../' } = options;
+  const { pkgName = 'rsuite-without-schema-typed', name, file, filePath = '../' } = options;
   const proxyPkg = {
     name: `${pkgName}/${name}`,
     private: true,
@@ -48,7 +48,7 @@ function proxyResource(options) {
 }
 
 async function writePkgFile(options) {
-  const { resources = [], pkgName = 'rsuite', isLocaleDir } = options;
+  const { resources = [], pkgName = 'rsuite-without-schema-typed', isLocaleDir } = options;
   await Promise.all(
     resources.map(async item => {
       const name = isLocaleDir ? `locales/${item}` : item;
