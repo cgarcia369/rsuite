@@ -1,8 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { format } from 'date-fns';
-import Form from '../../src/Form';
-import FormControl from '../../src/FormControl';
 
 interface TestFormControlOptions {
   /**
@@ -24,18 +22,6 @@ interface TestFormControlOptions {
    * Get the rendered UI element.
    */
   getUIElement?: () => any;
-}
-
-function expectedRenderedValue(value: any) {
-  if (Array.isArray(value) && value[0] instanceof Date) {
-    return value.map(item => format(item, 'yyyy-MM-dd')).join(' ~ ');
-  } else if (value instanceof Date) {
-    return format(value, 'yyyy-MM-dd');
-  } else if (typeof value !== 'string') {
-    return value.toString();
-  }
-
-  return value;
 }
 
 export function testFormControl(
@@ -89,94 +75,6 @@ export function testFormControl(
 
     it('Should render a default plain text', () => {
       render(<TestComponent plaintext {...componentProps} />);
-
-      const plaintext = ['Unfilled', 'Not selected', 'Not uploaded', 'yyyy-MM-dd'];
-
-      expect(screen.getByRole('text').textContent).to.match(new RegExp(plaintext.join('|')));
-    });
-  });
-
-  describe(`${displayName} - In Form`, () => {
-    it('Should assign values to components by accepting the values of the Form', () => {
-      const values = {
-        name: value
-      };
-      render(
-        <Form formValue={values}>
-          <FormControl name="name" accepter={TestComponent} {...componentProps} />
-        </Form>
-      );
-
-      const element = getUIElement();
-      const pickerInput = screen.queryByTestId('picker-toggle-input');
-
-      const renderedValue = expectedRenderedValue(value);
-
-      if (element.tagName === 'INPUT') {
-        expect(element).to.have.value(renderedValue);
-      } else if (pickerInput) {
-        expect(screen.getByTestId('picker-toggle-input')).to.have.attribute('value', renderedValue);
-      } else {
-        expect(element).to.have.text(renderedValue);
-      }
-    });
-
-    it('Should be disabled', () => {
-      render(
-        <Form disabled>
-          <FormControl name="name" accepter={TestComponent} {...componentProps} />
-        </Form>
-      );
-
-      const element = getUIElement();
-
-      if (element.tagName === 'INPUT') {
-        expect(element).to.have.attribute('disabled');
-      } else {
-        expect(element).to.have.attribute('aria-disabled', 'true');
-      }
-    });
-
-    it('Should be read only', () => {
-      render(
-        <Form readOnly>
-          <FormControl name="name" accepter={TestComponent} {...componentProps} />
-        </Form>
-      );
-
-      const element = getUIElement();
-
-      if (element.tagName === 'INPUT') {
-        expect(getUIElement()).to.have.attribute('readonly');
-      } else {
-        expect(screen.getByTestId('form-control-wrapper').firstChild).to.have.class(
-          new RegExp('-read-only')
-        );
-      }
-    });
-
-    it('Should be plaintext', () => {
-      render(
-        <Form plaintext formValue={{ name: value }}>
-          <FormControl name="name" accepter={TestComponent} {...componentProps} />
-        </Form>
-      );
-
-      expect(screen.queryByRole('text')).to.exist;
-
-      if (typeof value === 'string' || typeof value === 'number') {
-        expect(screen.getByRole('text')).to.have.text(value.toString());
-      } else if (value instanceof Date) {
-        expect(screen.getByRole('text')).to.have.text(format(value, 'yyyy-MM-dd'));
-      }
-    });
-
-    it('Should render a default plain text', () => {
-      render(
-        <Form plaintext>
-          <FormControl name="name" accepter={TestComponent} {...componentProps} />
-        </Form>
-      );
 
       const plaintext = ['Unfilled', 'Not selected', 'Not uploaded', 'yyyy-MM-dd'];
 

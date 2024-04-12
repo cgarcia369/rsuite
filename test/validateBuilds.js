@@ -11,7 +11,6 @@ const components = findResources({
 });
 
 const unstyledComponents = [
-  'Schema',
   'DOMHelper',
   'Whisper',
   'SafeAnchor',

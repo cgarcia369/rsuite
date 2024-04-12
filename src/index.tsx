@@ -117,16 +117,6 @@ export type { StepsProps, StepItemProps } from './Steps';
 
 // Form
 // --------------------------------------------------------
-export { default as Form, useFormClassNames } from './Form';
-export type {
-  FormProps,
-  FormInstance,
-  FormGroupProps,
-  FormErrorMessageProps,
-  FormControlLabelProps,
-  FormHelpTextProps,
-  FormControlProps
-} from './Form';
 
 // Data Entry
 // --------------------------------------------------------
@@ -304,7 +294,6 @@ export type { StackProps } from './Stack';
 
 // Utils and Hooks
 // --------------------------------------------------------
-export { default as Schema } from './Schema';
 
 export { default as Animation } from './Animation';
 export type {
