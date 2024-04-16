@@ -191,10 +191,10 @@ const DateRangeInput = React.forwardRef((props: DateRangeInputProps, ref) => {
         newValue = padValue;
       }
 
-      if (pattern === 'M') {
-        // Month cannot be less than 1.
-        newValue = Math.max(1, newValue);
-      }
+      // if (pattern === 'M') {
+      //   // Month cannot be less than 1.
+      //   newValue = Math.max(1, newValue);
+      // }
 
       getActiveState().setDateField(pattern, newValue, date => handleChange(date, event));
 
